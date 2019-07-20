@@ -1,0 +1,24 @@
+# Databricks notebook source
+# DBTITLE 1,Counting the number of Words occured in Text File.
+input = sc.textFile("/FileStore/tables/9_2_Book-3b2ed.txt")
+
+# COMMAND ----------
+
+rdd = input.flatMap(lambda x: x.split())
+
+occuredWord = rdd.countByValue() 
+for word,  count in occuredWord.items():
+  
+  # removing all special and unwanted character
+  
+  cleanWord = word.encode('ascii','ignore')
+  
+  # converting the byte data in string.
+  cleanWord = cleanWord.decode("utf-8")
+  if cleanWord:
+    print(cleanWord,":", +count)
+    
+
+# COMMAND ----------
+
+
